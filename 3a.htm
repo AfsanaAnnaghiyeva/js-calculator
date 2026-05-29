@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Calculator</title>
+  </head>
+  <body>
+    <div id="calculator">
+      <div>
+        <input type="text" id="display" />
+      </div>
+      <div>
+        <button onclick="clean()">C</button>
+        <button onclick="backspace()">←</button>
+        <button onclick="percent()">%</button>
+        <button onclick="show('/')">÷</button>
+      </div>
+      <div>
+        <button onclick="show('7')">7</button>
+        <button onclick="show('8')">8</button>
+        <button onclick="show('9')">9</button>
+        <button onclick="show('*')">×</button>
+      </div>
+      <div>
+        <button onclick="show('4')">4</button>
+        <button onclick="show('5')">5</button>
+        <button onclick="show('6')">6</button>
+        <button onclick="show('-')">-</button>
+      </div>
+      <div>
+        <button onclick="show('1')">1</button>
+        <button onclick="show('2')">2</button>
+        <button onclick="show('3')">3</button>
+        <button onclick="show('+')">+</button>
+      </div>
+      <div>
+        <button onclick="show('0')">0</button>
+        <button onclick="show('.')">.</button>
+        <button onclick="calc()" id="eq">=</button>
+      </div>
+    </div>
+
+    <script>
+      let display = document.getElementById("display");
+
+      function clean() {
+        display.value = "";
+      }
+      function calc() {
+        display.value = eval(display.value);
+      }
+      function backspace() {
+        display.value = display.value.slice(0, -1);
+      }
+
+      function percent() {
+        let parts = display.value.split(/([\+\-\*\/])/);
+
+        let lastIndex = parts.length - 1;
+        let number = parseFloat(parts[lastIndex]);
+
+        if (parts.length > 1) {
+          let firstNum = parseFloat(parts[0]);
+
+          let result = (firstNum * number) / 100;
+          parts[lastIndex] = result.toString();
+        } else {
+          parts[lastIndex] = (number / 100).toString();
+        }
+        display.value = parts.join("");
+      }
+      
+      function show(x) {
+        display.value += x;
+      }
+    </script>
+  </body>
+</html>
